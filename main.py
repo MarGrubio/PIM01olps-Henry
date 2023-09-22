@@ -12,17 +12,8 @@ from fastapi.responses import HTMLResponse
 #INSTANCIAMOS LA API 
 app = FastAPI()
 
-#DATAFRAMES  
-df_reviews = pd.read_parquet(r"C:\Users\ACER\Documents\HENRY\LABS\PI01\JUPYTER NOTEBOOKS\data\user_reviews_clean.parquet")
-df_games = pd.read_parquet(r"C:\Users\ACER\Documents\HENRY\LABS\PI01\JUPYTER NOTEBOOKS\data\user_games_clean.parquet")
-df_items = pd.read_parquet(r"C:\Users\ACER\Documents\HENRY\LABS\PI01\JUPYTER NOTEBOOKS\data\user_items_clean.parquet")
-df_recomendacion = pd.read_parquet(r"C:\Users\ACER\Documents\HENRY\LABS\PI01\JUPYTER NOTEBOOKS\data\df_recomendacion.parquet")
-df_conteo = pd.read_parquet(r"C:\Users\ACER\Documents\HENRY\LABS\PI01\JUPYTER NOTEBOOKS\data\df_conteo.parquet")
-df_posicion = pd.read_parquet(r"C:\Users\ACER\Documents\HENRY\LABS\PI01\JUPYTER NOTEBOOKS\data\df_posicion.parquet")
-df_funsentiment = pd.read_parquet(r"C:\Users\ACER\Documents\HENRY\LABS\PI01\JUPYTER NOTEBOOKS\data\df_funsentiment.parquet")
-df_ITGA = pd.read_parquet(r"C:\Users\ACER\Documents\HENRY\LABS\PI01\JUPYTER NOTEBOOKS\data\df_ITGA.parquet")
-df_countreviews = pd.read_parquet(r"C:\Users\ACER\Documents\HENRY\LABS\PI01\JUPYTER NOTEBOOKS\data\df_countreviews.parquet")
-df_playtime_forever = pd.read_parquet(r"C:\Users\ACER\Documents\HENRY\LABS\PI01\JUPYTER NOTEBOOKS\data\df_playtime_forever.parquet")
+#DATAFRAME  
+df_playtime_forever = pd.read_parquet("df_playtime_forever.parquet")
 
 
 
