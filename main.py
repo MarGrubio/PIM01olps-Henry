@@ -13,7 +13,7 @@ from fastapi.responses import HTMLResponse
 app = FastAPI()
 
 #DATAFRAME  
-df_playtime_forever = pd.read_parquet("df_playtime_forever.parquet")
+df_ugenre = pd.read_parquet("df_ugenre.parquet")
 
 
 
@@ -115,26 +115,42 @@ async def genre(genero):
 
 #FUNCIÓN 3
 @app.get("/userforgenre/{genre}", name = "USERFORGENRE")
-async def userforgenre(genero):
-    # Filtra el DataFrame principal (df_playtime_forever) para obtener datos relacionados con el género especificado.
-    data_por_genero = df_playtime_forever[df_playtime_forever['genres'] == genero]
+async def userforgenre(genre):
+    '''
+    <b>Objetivo:</b>
     
-    # Agrupa los datos filtrados por usuario y suma las horas de juego para cada uno.
-    top_users = data_por_genero.groupby(['user_url', 'user_id'])['playtime_horas'].sum().nlargest(5).reset_index()
+    Devuelve el TOP 5 de usuarios con más horas jugadas en un género específico.
+
+    <b>Argumento:</b>
     
-    # Crea un diccionario para almacenar la información de los mejores usuarios.
-    top_users_dict = {}
+    genre (str): El género de juegos para el que se desea obtener el TOP 5 de usuarios.
     
-    # Itera a través de los datos de los mejores usuarios y los agrega al diccionario.
-    for index, row in top_users.iterrows():
-        user_info = {
+    <b>Ejemplo:</b>
+    
+    genero: Adventure
+    
+    '''
+
+    # Filtrar el DataFrame para obtener datos específicos del género y ordenar por horas jugadas
+    top_users = df_ugenre[df_ugenre['genres'] == genre] \
+        .sort_values(by='playtime_forever', ascending=False) \
+        .head(5) \
+        .reset_index(drop=True)
+
+    # Crear una lista de diccionarios para representar el resultado
+    top_users_list = [
+        {
             'user_id': row['user_id'],
-            'user_url': row['user_url']
+            'user_url': row['user_url'],
+            'playtime_forever': row['playtime_forever']
         }
-        top_users_dict[index + 1] = user_info
     
-    # Devuelve el diccionario de los mejores usuarios.
-    return top_users_dict
+        for index, row in top_users.iterrows()
+    ]
+    #dic = top_users_list.to_dict(orient = 'records')
+
+    return{'Genero': genre, 
+           'TOP 5 de usuarios': top_users_list}
 
 
 
